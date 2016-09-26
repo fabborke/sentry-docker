@@ -29,7 +29,7 @@ services:
     - sentry-postgres:postgres
     - sentry-redis:redis
     image: sentry
-    command: sentry celery beat
+    command: sentry run beat
 
 
   sentry-worker-1:
