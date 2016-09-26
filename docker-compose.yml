@@ -2,7 +2,7 @@ version: '2'
 
 services:
   sentry-redis:
-    imgage: redis
+    image: redis
     restart: always
 
   sentry-postgres:
@@ -15,7 +15,7 @@ services:
   my-sentry:
     environment:
     - SENTRY_SECRET_KEY='<secret-key>'
-    link:
+    links:
     - sentry-redis:redis
     - sentry-postgres:postgres
     image: sentry
@@ -23,7 +23,7 @@ services:
   sentry-cron:
     environment:
     - SENTRY_SECRET_KEY='<secret-key>'
-    link:
+    links:
     - sentry-postgres:postgres
     - sentry-redis:redis
     image: sentry
@@ -33,7 +33,7 @@ services:
   sentry-worker-1:
     environment:
     - SENTRY_SECRET_KEY='<secret-key>'
-    link:
+    links:
     - sentry-postgres:postgres
     - sentry-redis:redis
     image: sentry
