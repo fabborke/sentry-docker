@@ -16,6 +16,9 @@ services:
     environment:
     - SENTRY_SECRET_KEY='${SECRET_KEY}'
     - SENTRY_REDIS_HOST=redis
+    - SENTRY_POSTGRES_HOST=postgres
+    - SENTRY_DB_USER=sentry
+    - SENTRY_DB_PASSWORD=secret
     links:
     - sentry-redis:redis
     - sentry-postgres:postgres
@@ -27,6 +30,9 @@ services:
     environment:
     - SENTRY_SECRET_KEY='${SECRET_KEY}'
     - SENTRY_REDIS_HOST=redis
+    - SENTRY_POSTGRES_HOST=postgres
+    - SENTRY_DB_USER=sentry
+    - SENTRY_DB_PASSWORD=secret
     links:
     - sentry-postgres:postgres
     - sentry-redis:redis
@@ -38,6 +44,9 @@ services:
     environment:
     - SENTRY_SECRET_KEY='${SECRET_KEY}'
     - SENTRY_REDIS_HOST=redis
+    - SENTRY_POSTGRES_HOST=postgres
+    - SENTRY_DB_USER=sentry
+    - SENTRY_DB_PASSWORD=secret
     links:
     - sentry-postgres:postgres
     - sentry-redis:redis
