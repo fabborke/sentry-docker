@@ -31,8 +31,7 @@ services:
     - sentry-postgres:postgres
     - sentry-redis:redis
     image: sentry
-    command: sentry run beat
-
+    command: sentry run cron
 
   sentry-worker-1:
     environment:
