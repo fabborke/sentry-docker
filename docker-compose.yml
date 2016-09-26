@@ -24,6 +24,7 @@ services:
   sentry-cron:
     environment:
     - SENTRY_SECRET_KEY='${SECRET_KEY}'
+    - SENTRY_REDIS_HOST=redis
     links:
     - sentry-postgres:postgres
     - sentry-redis:redis
