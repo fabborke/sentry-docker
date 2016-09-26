@@ -8,13 +8,9 @@ Just clone and run ```docker-compose up``` to start sentry.
 docker run --rm sentry config generate-secret-key
 ```
 
-## Initialize tables
+## Initialize tables & create initial user
 
 ```
-docker run -it --rm -e SENTRY_SECRET_KEY='<secret-key>' --link sentry-postgres:postgres --link sentry-redis:redis sentry upgrade
-```
-
-## Create the initial user
-```
-docker run -it --rm -e SENTRY_SECRET_KEY='<secret-key>' --link sentry-redis:redis --link sentry-postgres:postgres sentry createuser
+source .env
+docker run -it --rm -e SENTRY_SECRET_KEY="$SECRET_KEY" -e SENTRY_REDIS_HOST=redis -e SENTRY_POSTGRES_HOST=postgres -e SENTRY_DB_USER=sentry -e SENTRY_DB_PASSWORD=secret --link sentrydocker_sentry-postgres_1:postgres --link sentrydocker_sentry-redis_1:redis --net sentrydocker_default sentry upgrade
 ```
