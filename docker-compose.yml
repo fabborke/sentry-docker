@@ -20,6 +20,8 @@ services:
     - sentry-redis:redis
     - sentry-postgres:postgres
     image: sentry
+    ports:
+    - "8080:9000"
 
   sentry-cron:
     environment:
