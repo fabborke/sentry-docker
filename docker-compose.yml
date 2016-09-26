@@ -38,11 +38,3 @@ services:
     - sentry-redis:redis
     image: sentry
     command: sentry celery worker
-
-#docker run --rm sentry config generate-secret-key
-
-#docker run -it --rm -e SENTRY_SECRET_KEY='<secret-key>' --link sentry-postgres:postgres --link sentry-redis:redis sentry upgrade
-
-
-
-
