@@ -1,49 +1,48 @@
 version: '2'
 
 services:
-  sentry-redis
-    imgage: redis:latest
+  sentry-redis:
+    imgage: redis
     restart: always
 
-  sentry-postgres
+  sentry-postgres:
     environment:
-      POSTGRES_PASSWORD=secret
-      POSTGRES_USER=sentry
-    image: postgres:latest
+    - POSTGRES_PASSWORD=secret
+    - POSTGRES_USER=sentry
+    image: postgres
     restart: always
 
+  my-sentry:
+    environment:
+    - SENTRY_SECRET_KEY='<secret-key>'
+    link:
+    - sentry-redis:redis
+    - sentry-postgres:postgres
+    image: sentry
+
+  sentry-cron:
+    environment:
+    - SENTRY_SECRET_KEY='<secret-key>'
+    link:
+    - sentry-postgres:postgres
+    - sentry-redis:redis
+    image: sentry
+    command: sentry celery beat
+
+
+  sentry-worker-1:
+    environment:
+    - SENTRY_SECRET_KEY='<secret-key>'
+    link:
+    - sentry-postgres:postgres
+    - sentry-redis:redis
+    image: sentry
+    command: sentry celery worker
+
+#docker run --rm sentry config generate-secret-key
+
+#docker run -it --rm -e SENTRY_SECRET_KEY='<secret-key>' --link sentry-postgres:postgres --link sentry-redis:redis sentry upgrade
 
 
 
-docker run --rm sentry config generate-secret-key
 
-docker run -it --rm -e SENTRY_SECRET_KEY='<secret-key>' --link sentry-postgres:postgres --link sentry-redis:redis sentry upgrade
-
-
-my-sentry
-  environment:
-    SENTRY_SECRET_KEY='<secret-key>'
-  link:
-    sentry-redis:redis
-    sentry-postgres:postgres
-  image: sentry:latest
-
-
-sentry-cron
-  environment:
-    SENTRY_SECRET_KEY='<secret-key>'
-  link:
-    sentry-postgres:postgres
-    sentry-redis:redis
-  image: sentry:latest
-  command: 'sentry celery beat'
-
-
-sentry-worker-1
-  environment:
-    SENTRY_SECRET_KEY='<secret-key>'
-  link:
-    sentry-postgres:postgres
-    sentry-redis:redis
-  image: sentry:latest
-  command: 'sentry celery worker'
