@@ -14,7 +14,7 @@ services:
 
   my-sentry:
     environment:
-    - SENTRY_SECRET_KEY='<secret-key>'
+    - SENTRY_SECRET_KEY='${SECRET_KEY}'
     links:
     - sentry-redis:redis
     - sentry-postgres:postgres
@@ -22,7 +22,7 @@ services:
 
   sentry-cron:
     environment:
-    - SENTRY_SECRET_KEY='<secret-key>'
+    - SENTRY_SECRET_KEY='${SECRET_KEY}'
     links:
     - sentry-postgres:postgres
     - sentry-redis:redis
@@ -32,7 +32,7 @@ services:
 
   sentry-worker-1:
     environment:
-    - SENTRY_SECRET_KEY='<secret-key>'
+    - SENTRY_SECRET_KEY='${SECRET_KEY}'
     links:
     - sentry-postgres:postgres
     - sentry-redis:redis
